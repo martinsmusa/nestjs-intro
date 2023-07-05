@@ -1,6 +1,5 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -8,25 +7,62 @@ import {
   Patch,
   Post,
   Query,
-  UseInterceptors
+  Session, UseGuards
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { Serialize } from '../interceptors/serialize.interceptor';
+import { UserDto } from './dtos/user.dto';
+import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { User } from './users.entity';
+import { AuthGuard } from '../guards/auth.guard';
 
+@Serialize(UserDto)
 @Controller('auth')
 export class UsersController {
-  constructor(private usersService: UsersService) {
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService
+  ) {
+  }
+
+  @Get('/whoami')
+  @UseGuards(AuthGuard)
+  whoAmI(
+    @CurrentUser() currentUser: User
+  ) {
+    return currentUser;
   }
 
   @Post('/signup')
   async createUser(
-    @Body() body: CreateUserDto
+    @Body() body: CreateUserDto,
+    @Session() session: any
   ) {
-    return this.usersService.create(body);
+    const user = await this.authService.signUp(body);
+    session.userId = user.id;
+    return user;
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('/signIn')
+  async signIn(
+    @Body() body: CreateUserDto,
+    @Session() session: any
+  ) {
+    const user = await this.authService.signIn(body);
+    session.userId = user.id;
+    return user;
+  }
+
+  @Post('/signout')
+  signOut(
+    @Session() session: any
+  ) {
+    session.userId = null;
+  }
+
   @Get('/:id')
   findUser(
     @Param('id') id: string
@@ -34,7 +70,6 @@ export class UsersController {
     return this.usersService.findOne(parseInt(id));
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   findAllUsers(
     @Query('email') email: string
@@ -52,6 +87,6 @@ export class UsersController {
     @Param('id') id: string ,
     @Body() data: UpdateUserDto
   ) {
-    return this.usersService.update(parseInt(id), data)
+    return this.usersService.update(parseInt(id), data);
   }
 }

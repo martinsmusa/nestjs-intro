@@ -24,6 +24,8 @@ module.exports = {
     "no-trailing-spaces": ["error", { "skipBlankLines": true }],
     "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 0 }],
     "object-curly-spacing": ["error", "always"],
-    "template-curly-spacing": ["error", "always"]
+    "template-curly-spacing": ["error", "always"],
+    "semi": ["error", "always"],
+    "no-multi-spaces": "error"
   },
 };
