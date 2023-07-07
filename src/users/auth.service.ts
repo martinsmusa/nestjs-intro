@@ -38,8 +38,6 @@ export class AuthService {
     const hash = (await scrypt(plainPassword, salt, 32)) as Buffer;
 
     if (storedHash !== hash.toString('hex')) {
-      console.log('storedHash', storedHash);
-      console.log('hash', hash.toString('hex'));
       throw new BadRequestException('Authentication failed');
     }
 
