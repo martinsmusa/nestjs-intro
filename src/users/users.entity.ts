@@ -5,7 +5,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn, UpdateDateColumn
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from 'typeorm';
 
 @Entity()
