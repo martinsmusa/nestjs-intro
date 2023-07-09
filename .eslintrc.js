@@ -26,6 +26,7 @@ module.exports = {
     "object-curly-spacing": ["error", "always"],
     "template-curly-spacing": ["error", "always"],
     "semi": ["error", "always"],
-    "no-multi-spaces": "error"
+    "no-multi-spaces": "error",
+    "@typescript-eslint/no-namespace": "off"
   },
 };

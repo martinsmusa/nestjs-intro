@@ -5,9 +5,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
+import { Report } from '../reports/reports.entity';
 
 @Entity()
 export class User {
@@ -29,6 +31,15 @@ export class User {
     onUpdate: 'CURRENT_TIMESTAMP(6)'
   })
   updated_at: Date;
+
+  @Column({ default: true })
+  admin: boolean;
+
+  @OneToMany(
+    () => Report,
+    (report) => report.user
+  )
+  reports: Report[];
 
   @AfterInsert()
   logInsert() {
