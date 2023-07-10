@@ -24,8 +24,8 @@ export class CreateReportDto implements Partial<Report> {
   mileage: number;
 
   @IsLongitude()
-  lng: number;
+  lng: string;
 
   @IsLatitude()
-  lat: number;
+  lat: string;
 }

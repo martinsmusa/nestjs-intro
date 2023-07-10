@@ -40,6 +40,6 @@ export class ReportsController {
   getEstimate(
     @Query() query: GetEstimateDto
   ) {
-    return query;
+    return this.reportsService.getEstimate(query);
   }
 }

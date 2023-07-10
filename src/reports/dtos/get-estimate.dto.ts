@@ -21,11 +21,9 @@ export class GetEstimateDto implements Partial<Report> {
   @Max(16e5)
   mileage: number;
 
-  @Transform(({ value }) => parseFloat(value))
   @IsLongitude()
-  lng: number;
+  lng: string;
 
-  @Transform(({ value }) => parseFloat(value))
   @IsLatitude()
-  lat: number;
+  lat: string;
 }

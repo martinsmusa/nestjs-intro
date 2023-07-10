@@ -27,10 +27,10 @@ export class ReportDto implements Partial<Report> {
   mileage: number;
 
   @Expose()
-  lng: number;
+  lng: string;
 
   @Expose()
-  lat: number;
+  lat: string;
 
   @Expose()
   approved: boolean;

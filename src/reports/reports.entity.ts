@@ -20,7 +20,7 @@ export class Report {
   @Column({ default: false })
   approved: boolean;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   price: number;
 
   @Column()
@@ -32,11 +32,11 @@ export class Report {
   @Column()
   year: number;
 
-  @Column()
-  lng: number;
+  @Column({ type: 'real' })
+  lng: string;
 
-  @Column()
-  lat: number;
+  @Column({ type: 'real' })
+  lat: string;
 
   @Column()
   mileage: number;
